@@ -1,0 +1,9 @@
+.radius-0{
+	@include radius(0);
+}
+@for $i from 2 through 20{
+	.radius-#{$i} {
+		@include radius(#{$i});
+	}
+}
+.radius-circle{@include radius('circle');}
