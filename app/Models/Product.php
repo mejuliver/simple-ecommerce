@@ -98,6 +98,13 @@ class Product extends Model
         return $q ? $q->content : '';
     }
 
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower(str_replace(' ','-',$value))
+        );
+    }
+
     protected function fileUrlJson(): Attribute
     {
         return Attribute::make(

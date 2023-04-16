@@ -1,4 +1,4 @@
-<header role="header" class="header top-header main-header p00 m00" id="top-header">
+<header role="header" class="header top-header main-header p00 m00" id="top-header" x-data="menu()">
     <nav role="navigation" class="nav menu main-menu2 pt4 pb4 bg-primary">
         <div class="container">
             <div class="row d-flex align-items-center">
@@ -17,30 +17,45 @@
                 </div>
                 <div class="col-12 col-md-6 d-flex justify-content-start justify-content-md-end">
                     <ul class="p00 m00 menu">
-                       <li>
+                        <li>
                            <a href="#">
                                <i class="ti ti-bell mr8"></i>Notifications
                            </a>
-                       </li>
-    
+                        </li>
                        @guest
                         <li>
-                           <a href="{{ route('account.login') }}">
+                           <a href="{{ url('/login') }}">
                                Login
                            </a>
                        </li>
                        <li>
-                           <a href="{{ route('account.register') }}">
+                           <a href="{{ url('/register') }}">
                                Register
                            </a>
                        </li>
                        @endguest
+                       @auth
+                       <li>
+                           <a href="#" class="d-flex align-items-center">
+                                <span>{{ auth()->user()->name }}</span>
+                                <i class="ml8 ti ti-angle-down"></i>
+                            </a>
+                            <ul>
+                                <li>
+                                    <a href="{{ url('/account/') }}">Account</a>
+                                </li>
+                                <li>
+                                    <a href="#" @click="logout()">Logout</a>
+                                </li>
+                            </ul>
+                       </li>
+                       @endauth
                     </ul>
                 </div>
             </div>
         </div>
     </nav>
-    <nav role="navigation" class="nav menu main-menu pt16 pb16 border-bottom" id="top-menu">
+    <nav role="navigation" class="nav menu main-menu pt16 pb16 border-bottom bg-white" id="top-menu">
         <div class="container">
             <div class="row d-flex align-items-center">
                 <div class="col-8 col-md-3 mb-xs-16">
@@ -55,9 +70,9 @@
                 </div>
                 <div class="col-12 col-md-7 d-flex justify-content-center">
                     <div class="search-input-wrapper">
-                        <form class="search-box d-flex align-items-center" ref="searchForm" :action="$page.props.baseUrl+'/company/search?q='+searchqtext" method="get">
+                        <form class="search-box d-flex align-items-center" method="get">
                             <i class="ti ti-search font18"></i>
-                            <input type="text" name="q" v-model="searchqtext" @keypress="searchq" class="form-control" placeholder="Search">
+                            <input type="text" name="q" class="form-control" placeholder="Search">
                         </form>
                     </div>
                 </div>
@@ -69,7 +84,7 @@
             </div>
         </div>
     </nav>
-    <nav role="navigation" class="nav menu main-menu pt8 pb8 border-bottom" id="top-menu">
+    <nav role="navigation" class="nav menu main-menu pt8 pb8 border-bottom bg-white" id="top-menu">
         <div class="container">
             <div class="row d-flex align-items-center">
                 <ul class="p00 m00 menu">
@@ -97,3 +112,20 @@
         </div>
     </nav>
 </header>
+
+<script>
+    function menu(){
+        return {
+            logout(){
+                axios.post(
+                app_utility.base_url+'/logout')
+                .then(res=>{
+                    location.replace(app_utility.base_url+'/');
+                })
+                .catch(err=>{
+                    console.log(err);
+                });
+            }
+        }
+    }
+</script>

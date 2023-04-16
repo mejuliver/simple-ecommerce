@@ -70,6 +70,13 @@ class Category extends Model
         return $this->hasMany('App\Models\Category','parent_id','id');
     }
 
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower(str_replace(' ','-',$value))
+        );
+    }
+
     protected function json(): Attribute
     {
         return Attribute::make(

@@ -61,6 +61,13 @@ class Manufacturer extends Model
         $q = $this->metas()->where('name','keywords')->where('type','meta')->first();
         return $q ? $q->content : '';
     }
+
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower(str_replace(' ','-',$value))
+        );
+    }
     
     protected function json(): Attribute
     {

@@ -31,6 +31,13 @@ class Currency extends Model
         );
     }
 
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower(str_replace(' ','-',$value))
+        );
+    }
+
     public function scopeActive(Builder $query): void
     {
         $query->where('is_active', 1);

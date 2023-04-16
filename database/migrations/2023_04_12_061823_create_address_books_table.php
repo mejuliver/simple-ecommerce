@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('address_books', function (Blueprint $table) {
             $table->id();
             $table->foreignIDFor(\App\Models\User::class)->constrained()->onUpdate('cascade')->onDelete('cascade');
+            $table->string('addressbook_id',200)->nullable()->index();
             $table->string('first_name',200)->index();
             $table->string('middle_name',200)->nullable();
             $table->string('last_name',200);

@@ -32,6 +32,13 @@ class Invoice extends Model
         return $this->morphMany('App\Models\Media','mediaable');
     }
 
+    protected function slug(): Attribute
+    {
+        return Attribute::make(
+            set: fn (string $value) => strtolower(str_replace(' ','-',$value))
+        );
+    }
+
     protected function json(): Attribute
     {
         return Attribute::make(
